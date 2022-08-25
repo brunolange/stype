@@ -4,6 +4,10 @@ instance Show a => Show (L0 a) where
     show Nil = ""
     show (C0 x xs) = show x ++ " " ++ show xs
 
+instance Functor L0 where
+    fmap f Nil = Nil
+    fmap f (C0 x xs) = C0 (f x) (fmap f xs)
+
 class Header h where
     head1 :: h a -> a
 
@@ -14,6 +18,9 @@ instance Show a => Show (L1 a) where
 
 instance Header L1 where
     head1 (C1 x _) = x
+
+instance Functor L1 where
+    fmap f (C1 x xs) = C1 (f x) (fmap f xs)
 
 data L2 a = C2 a (L1 a)
 
