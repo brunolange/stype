@@ -19,6 +19,10 @@ instance Semigroup (L0 a) where
     xs <> Nil = xs
     (C0 x xs) <> ys = C0 x (xs <> ys)
 
+instance Monoid (L0 a) where
+    mempty = Nil
+    mappend = (<>)
+
 class Header h where
     head1 :: h a -> a
 
