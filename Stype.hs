@@ -14,6 +14,11 @@ instance Applicative L0 where
     _ <*> Nil = Nil
     (C0 f fs) <*> (C0 x xs) = C0 (f x) $ fs <*> xs
 
+instance Semigroup (L0 a) where
+    Nil <> xs = xs
+    xs <> Nil = xs
+    (C0 x xs) <> ys = C0 x (xs <> ys)
+
 class Header h where
     head1 :: h a -> a
 
