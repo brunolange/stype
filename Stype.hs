@@ -8,6 +8,12 @@ instance Functor L0 where
     fmap f Nil = Nil
     fmap f (C0 x xs) = C0 (f x) (fmap f xs)
 
+instance Applicative L0 where
+    pure a = C0 a Nil
+    Nil <*> _ = Nil
+    _ <*> Nil = Nil
+    (C0 f fs) <*> (C0 x xs) = C0 (f x) $ fs <*> xs
+
 class Header h where
     head1 :: h a -> a
 
