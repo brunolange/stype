@@ -28,6 +28,10 @@ instance Header L1 where
 instance Functor L1 where
     fmap f (C1 x xs) = C1 (f x) (fmap f xs)
 
+instance Applicative L1 where
+    pure a = C1 a Nil
+    (C1 f fs) <*> (C1 x xs) = C1 (f x) $ fs <*> xs
+
 data L2 a = C2 a (L1 a)
 
 instance Show a => Show (L2 a) where
