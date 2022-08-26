@@ -41,12 +41,14 @@ instance Applicative L1 where
     pure a = C1 a Nil
     (C1 f fs) <*> (C1 x xs) = C1 (f x) $ fs <*> xs
 
-instance Semigroup (L1 a) where
-    (C1 x xs) <> (C1 y ys) = C1 x $ xs <> pure y <> ys -- this is still an L1 but it would also fit "L2".
+instance Num a => Semigroup (L1 a) where
+    -- (C1 x xs) <> (C1 y ys) = C1 x $ xs <> pure y <> ys -- this is still an L1 but it would also fit "L2".
     -- xs <> _ = xs -- this would lose information
     -- _ <> ys = ys -- this would lose information
+    (C1 x xs) <> (C1 y ys) = C1 (x + y) $ xs <> ys -- this allows for monoid but restricts polymorphism
 
--- L1 can't be a monoid! There's no mempty for the mappend I've implemented!
+instance Num a => Monoid (L1 a) where
+    mempty = C1 0 Nil
 
 data L2 a = C2 a (L1 a)
 
