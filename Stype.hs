@@ -46,6 +46,8 @@ instance Semigroup (L1 a) where
     -- xs <> _ = xs -- this would lose information
     -- _ <> ys = ys -- this would lose information
 
+-- L1 can't be a monoid! There's no mempty for the mappend I've implemented!
+
 data L2 a = C2 a (L1 a)
 
 instance Show a => Show (L2 a) where
